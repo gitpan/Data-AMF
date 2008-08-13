@@ -65,6 +65,13 @@ sub read_s16 {
     return unpack('s', swap($data));
 }
 
+sub read_u24 {
+    my $self = shift;
+
+    my $data = $self->read(3);
+    return unpack('N', "\0$data");
+}
+
 sub read_u32 {
     my $self = shift;
 
@@ -123,6 +130,13 @@ sub write_s16 {
     return $self->write( swap pack('s', $data) );
 }
 
+sub write_u24 {
+    my ($self, $data) = @_;
+
+    return $self->write( pack('CCC', $data) ) if ENDIAN eq 'BIG';
+    return $self->write( swap pack('CCC', $data) );
+}
+
 sub write_u32 {
     my ($self, $data) = @_;
     $self->write( pack('N', $data) );
@@ -174,6 +188,8 @@ IO class for reading/writing AMF data
 
 =head2 read_s16
 
+=head2 read_u24
+
 =head2 read_u32
 
 =head2 read_double
@@ -189,6 +205,8 @@ IO class for reading/writing AMF data
 =head2 write_u16
 
 =head2 write_s16
+
+=head2 write_u24
 
 =head2 write_u32
 
