@@ -220,9 +220,11 @@ sub write_string
 	}
 	else
 	{
-		$self->{'stored_strings'}->{$value} = $self->{'stored_strings_count'};
-		$self->{'stored_strings_count'}++;
-		
+		if ($value ne '') {
+			$self->{'stored_strings'}->{$value} = $self->{'stored_strings_count'};
+			$self->{'stored_strings_count'}++;
+		}
+
 		my $reference = length $value;
 		$reference = $reference << 1 | 1;
 		
@@ -386,7 +388,7 @@ Data::AMF::Formatter::AMF3 - AMF3 serializer
 
 =head1 SYNOPSIS
 
-my $amf3_data = Data::AMF::Formatter::AMF3->format($obj);
+    my $amf3_data = Data::AMF::Formatter::AMF3->format($obj);
 
 =head1 METHODS
 
